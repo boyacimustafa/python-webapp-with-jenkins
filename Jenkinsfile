@@ -23,6 +23,20 @@ pipeline {
                 sh 'docker push mustafaboyar/python-webapp:latest'                
             }    
         }
+
+        stage('Stop Remove if previous container running'){
+            steps{
+                sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'                
+            }    
+        }
+
+        stage('Run Docker Container'){
+            steps{
+                sh 'docker run --name mypythonContainer mustafaboyar/python-webapp'                
+            }    
+        }
+        
     }
     post{
         always{
