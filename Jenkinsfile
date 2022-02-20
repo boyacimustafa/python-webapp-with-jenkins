@@ -10,11 +10,13 @@ pipeline {
             steps{
                 sh 'docker build -t mustafaboyar/python-webapp:latest .'                
             }
+        }
             
         stage('Docker Login'){
             steps{
                 sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                
             }
+        }
         
         stage('Docker Image Upload'){
             steps{
